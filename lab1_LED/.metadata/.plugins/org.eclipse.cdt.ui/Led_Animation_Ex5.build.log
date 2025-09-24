@@ -1,0 +1,10 @@
+01:39:16 **** Build of configuration Debug for project Led_Animation_Ex5 ****
+make -j16 all 
+arm-none-eabi-size   Led_Animation_Ex5.elf 
+   text	   data	    bss	    dec	    hex	filename
+   5380	     20	   1580	   6980	   1b44	Led_Animation_Ex5.elf
+Finished building: default.size.stdout
+ 
+
+01:39:16 Build Finished. 0 errors, 0 warnings. (took 158ms)
+
