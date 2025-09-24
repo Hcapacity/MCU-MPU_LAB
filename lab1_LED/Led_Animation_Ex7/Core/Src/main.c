@@ -56,7 +56,7 @@ static void MX_GPIO_Init(void);
 /* USER CODE BEGIN 0 */
 void clearALLClock(){
 	for(int i = 0; i < 12; ++i){
-		HAL_GPIO_WritePin(GPIOA, Led_0_Pin << i, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOA, Led_0_Pin << i, GPIO_PIN_SET);
 	}
 }
 /* USER CODE END 0 */

@@ -58,17 +58,17 @@ static void MX_GPIO_Init(void);
 /* Private user code ---------------------------------------------------------*/
 /* USER CODE BEGIN 0 */
 void setNumberOnClock(int num){
-	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_RESET);
 }
 
 
 void clearNumberOnClock(int num){
-	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_SET);
 }
 
 void clearALLClock(){
 	for(int i = 0; i < 12; ++i){
-		HAL_GPIO_WritePin(GPIOA, Led0_Pin << i, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOA, Led0_Pin << i, GPIO_PIN_SET);
 	}
 }
 /* USER CODE END 0 */
@@ -110,13 +110,13 @@ int main(void)
   while (1)
   {
 	 // Checking timme_boundary
-	 if(second_counter == 60){
+	 if(second_counter >= 60){
 		 second_counter = 0;
 		 munite_counter++;
-		 if(munite_counter == 60){
+		 if(munite_counter >= 60){
 			 munite_counter = 0;
 			 hour_counter++;
-			 if(hour_counter == 12){
+			 if(hour_counter >= 12){
 				 hour_counter = 0;
 			 }
 		 }
