@@ -42,9 +42,11 @@
 /* Private variables ---------------------------------------------------------*/
 
 /* USER CODE BEGIN PV */
-uint16_t Counter = 0;
-uint16_t counter1;
-uint16_t counter2;
+uint16_t counter1 = 0;
+uint16_t counter2 = 0;
+
+uint8_t state1 = 0;
+uint8_t state2 = 0;
 /* USER CODE END PV */
 
 /* Private function prototypes -----------------------------------------------*/
@@ -140,59 +142,61 @@ int main(void)
   while (1)
   {
 	  // Implement Cycle of LED
-  	  if(Counter == 0){
-  		  HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin, GPIO_PIN_RESET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_1_Pin, GPIO_PIN_SET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_1_Pin, GPIO_PIN_SET);
-  		  counter1 = 5;
+	  	  	  if(counter1 <= 0 && state1 == 0){
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin, GPIO_PIN_RESET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_1_Pin, GPIO_PIN_SET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_1_Pin, GPIO_PIN_SET);
+	  	  		  counter1 = 500;
+	  	  		  state1 = 1;
+	  	  	  }
+	  	  	  if(counter1 <= 0 && state1 == 1){
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_1_Pin, GPIO_PIN_RESET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_1_Pin, GPIO_PIN_SET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin, GPIO_PIN_SET);
+	  	  		  counter1 = 300;
+	  	  		  state1 = 2;
+	  	  	  }
+	  	  	  if(counter1 <= 0 && state1 == 2){
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_1_Pin, GPIO_PIN_RESET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_1_Pin, GPIO_PIN_SET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin, GPIO_PIN_SET);
+	  	  		  counter1 = 200;
+	  	  		  state1 = 0;
+	  	  	  }
 
-  		  HAL_GPIO_WritePin(GPIOA, LED_RED_2_Pin, GPIO_PIN_SET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_2_Pin, GPIO_PIN_SET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_2_Pin, GPIO_PIN_RESET);
-  		  counter2 = 3;
-  	  }
-  	  if(Counter == 300){
-  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_2_Pin, GPIO_PIN_RESET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_2_Pin, GPIO_PIN_SET);
-  		  counter2 = 2;
-  	  }
-  	  if(Counter == 500){
-  		  HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin, GPIO_PIN_SET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_1_Pin, GPIO_PIN_RESET);
-  		  counter1 = 3;
-
-  		  HAL_GPIO_WritePin(GPIOA, LED_RED_2_Pin, GPIO_PIN_RESET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_2_Pin, GPIO_PIN_SET);
-  		  counter2 = 5;
-
-  	  }
-  	  if(Counter == 800){
-  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_1_Pin, GPIO_PIN_SET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_1_Pin, GPIO_PIN_RESET);
-  		  counter1 = 2;
-  	  }
-  	  if(Counter == 1000){
-  		  HAL_GPIO_WritePin(GPIOA, LED_RED_1_Pin, GPIO_PIN_RESET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_1_Pin, GPIO_PIN_SET);
-  		  counter1 = 5;
-
-  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_2_Pin, GPIO_PIN_RESET);
-  		  HAL_GPIO_WritePin(GPIOA, LED_RED_2_Pin, GPIO_PIN_SET);
-  		  counter2 = 3;
-
-  		  Counter = 0;
-  	  }
+	  	  	  if(counter2 <= 0 && state2 == 2){
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_RED_2_Pin, GPIO_PIN_RESET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_2_Pin, GPIO_PIN_SET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_2_Pin, GPIO_PIN_SET);
+	  	  		  counter2 = 500;
+	  	  		  state2 = 0;
+	  	  		 }
+	  	  	  if(counter2 <= 0 && state2 == 0){
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_2_Pin, GPIO_PIN_RESET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_2_Pin, GPIO_PIN_SET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_RED_2_Pin, GPIO_PIN_SET);
+	  	  		  counter2 = 300;
+	  	  		  state2 = 1;
+	  	  	  }
+	  	  	  if(counter2 <= 0 && state2 == 1){
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_YELLOW_2_Pin, GPIO_PIN_RESET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_GREEN_2_Pin, GPIO_PIN_SET);
+	  	  		  HAL_GPIO_WritePin(GPIOA, LED_RED_2_Pin, GPIO_PIN_SET);
+	  	  		  counter2 = 200;
+	  	  		  state2 = 2;
+	  	  	  }
 
   	  // Display counter
-  	  if(Counter % 100 == 0){
-		  display7SEG(counter1--, SEG_A_1_Pin, SEG_B_1_Pin, SEG_C_1_Pin,
+  	  if(counter1 % 100 == 0 || counter2 % 100 == 0){
+		  display7SEG(counter1/100, SEG_A_1_Pin, SEG_B_1_Pin, SEG_C_1_Pin,
 				  SEG_D_1_Pin,SEG_E_1_Pin, SEG_F_1_Pin, SEG_G_1_Pin, GPIOB);
-		  display7SEG(counter2--, SEG_A_2_Pin, SEG_B_2_Pin, SEG_C_2_Pin,
+		  display7SEG(counter2/100, SEG_A_2_Pin, SEG_B_2_Pin, SEG_C_2_Pin,
 				  SEG_D_2_Pin,SEG_E_2_Pin, SEG_F_2_Pin, SEG_G_2_Pin, GPIOB);
   	  }
   	  // Implement Timer
   	  HAL_Delay(10);
-  	  ++Counter;
+  	  --counter1;
+  	  --counter2;
     /* USER CODE END WHILE */
 
     /* USER CODE BEGIN 3 */

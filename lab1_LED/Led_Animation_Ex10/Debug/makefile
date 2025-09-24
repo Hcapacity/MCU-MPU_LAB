@@ -50,6 +50,9 @@ default.size.stdout \
 OBJDUMP_LIST += \
 Led_Animation_Ex10.list \
 
+OBJCOPY_HEX += \
+Led_Animation_Ex10.hex \
+
 OBJCOPY_BIN += \
 Led_Animation_Ex10.bin \
 
@@ -76,6 +79,11 @@ Led_Animation_Ex10.list: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DE
 	@echo 'Finished building: $@'
 	@echo ' '
 
+Led_Animation_Ex10.hex: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
+	arm-none-eabi-objcopy  -O ihex $(EXECUTABLES) "Led_Animation_Ex10.hex"
+	@echo 'Finished building: $@'
+	@echo ' '
+
 Led_Animation_Ex10.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEPS)
 	arm-none-eabi-objcopy  -O binary $(EXECUTABLES) "Led_Animation_Ex10.bin"
 	@echo 'Finished building: $@'
@@ -83,10 +91,10 @@ Led_Animation_Ex10.bin: $(EXECUTABLES) makefile objects.list $(OPTIONAL_TOOL_DEP
 
 # Other Targets
 clean:
-	-$(RM) $(SIZE_OUTPUT)$(OBJDUMP_LIST)$(EXECUTABLES)$(OBJS)$(S_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(OBJCOPY_BIN) Led_Animation_Ex10.elf
+	-$(RM) $(OBJCOPY_HEX)$(SIZE_OUTPUT)$(OBJDUMP_LIST)$(EXECUTABLES)$(OBJS)$(S_DEPS)$(S_UPPER_DEPS)$(C_DEPS)$(OBJCOPY_BIN) Led_Animation_Ex10.elf
 	-@echo ' '
 
-secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_BIN)
+secondary-outputs: $(SIZE_OUTPUT) $(OBJDUMP_LIST) $(OBJCOPY_HEX) $(OBJCOPY_BIN)
 
 fail-specified-linker-script-missing:
 	@echo 'Error: Cannot find the specified linker script. Check the linker settings in the build configuration.'

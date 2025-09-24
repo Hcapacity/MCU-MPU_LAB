@@ -87,12 +87,12 @@ void setNumberOnClock(int num){
  800014e:	b082      	sub	sp, #8
  8000150:	af00      	add	r7, sp, #0
  8000152:	6078      	str	r0, [r7, #4]
-	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_SET);
+	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_RESET);
  8000154:	2210      	movs	r2, #16
  8000156:	687b      	ldr	r3, [r7, #4]
  8000158:	fa02 f303 	lsl.w	r3, r2, r3
  800015c:	b29b      	uxth	r3, r3
- 800015e:	2201      	movs	r2, #1
+ 800015e:	2200      	movs	r2, #0
  8000160:	4619      	mov	r1, r3
  8000162:	4803      	ldr	r0, [pc, #12]	; (8000170 <setNumberOnClock+0x24>)
  8000164:	f000 fc74 	bl	8000a50 <HAL_GPIO_WritePin>
@@ -106,7 +106,7 @@ void setNumberOnClock(int num){
 08000174 <clearALLClock>:
 
 void clearNumberOnClock(int num){
-	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_RESET);
+	HAL_GPIO_WritePin(GPIOA, Led0_Pin << num, GPIO_PIN_SET);
 }
 
 void clearALLClock(){
@@ -117,12 +117,12 @@ void clearALLClock(){
  800017a:	2300      	movs	r3, #0
  800017c:	607b      	str	r3, [r7, #4]
  800017e:	e00c      	b.n	800019a <clearALLClock+0x26>
-		HAL_GPIO_WritePin(GPIOA, Led0_Pin << i, GPIO_PIN_RESET);
+		HAL_GPIO_WritePin(GPIOA, Led0_Pin << i, GPIO_PIN_SET);
  8000180:	2210      	movs	r2, #16
  8000182:	687b      	ldr	r3, [r7, #4]
  8000184:	fa02 f303 	lsl.w	r3, r2, r3
  8000188:	b29b      	uxth	r3, r3
- 800018a:	2200      	movs	r2, #0
+ 800018a:	2201      	movs	r2, #1
  800018c:	4619      	mov	r1, r3
  800018e:	4807      	ldr	r0, [pc, #28]	; (80001ac <clearALLClock+0x38>)
  8000190:	f000 fc5e 	bl	8000a50 <HAL_GPIO_WritePin>
@@ -178,11 +178,11 @@ int main(void)
   while (1)
   {
 	 // Checking timme_boundary
-	 if(second_counter == 60){
+	 if(second_counter >= 60){
  80001c0:	4b23      	ldr	r3, [pc, #140]	; (8000250 <main+0xa0>)
  80001c2:	781b      	ldrb	r3, [r3, #0]
- 80001c4:	2b3c      	cmp	r3, #60	; 0x3c
- 80001c6:	d11c      	bne.n	8000202 <main+0x52>
+ 80001c4:	2b3b      	cmp	r3, #59	; 0x3b
+ 80001c6:	d91c      	bls.n	8000202 <main+0x52>
 		 second_counter = 0;
  80001c8:	4b21      	ldr	r3, [pc, #132]	; (8000250 <main+0xa0>)
  80001ca:	2200      	movs	r2, #0
@@ -194,11 +194,11 @@ int main(void)
  80001d4:	b2da      	uxtb	r2, r3
  80001d6:	4b1f      	ldr	r3, [pc, #124]	; (8000254 <main+0xa4>)
  80001d8:	701a      	strb	r2, [r3, #0]
-		 if(munite_counter == 60){
+		 if(munite_counter >= 60){
  80001da:	4b1e      	ldr	r3, [pc, #120]	; (8000254 <main+0xa4>)
  80001dc:	781b      	ldrb	r3, [r3, #0]
- 80001de:	2b3c      	cmp	r3, #60	; 0x3c
- 80001e0:	d10f      	bne.n	8000202 <main+0x52>
+ 80001de:	2b3b      	cmp	r3, #59	; 0x3b
+ 80001e0:	d90f      	bls.n	8000202 <main+0x52>
 			 munite_counter = 0;
  80001e2:	4b1c      	ldr	r3, [pc, #112]	; (8000254 <main+0xa4>)
  80001e4:	2200      	movs	r2, #0
@@ -210,11 +210,11 @@ int main(void)
  80001ee:	b2da      	uxtb	r2, r3
  80001f0:	4b19      	ldr	r3, [pc, #100]	; (8000258 <main+0xa8>)
  80001f2:	701a      	strb	r2, [r3, #0]
-			 if(hour_counter == 12){
+			 if(hour_counter >= 12){
  80001f4:	4b18      	ldr	r3, [pc, #96]	; (8000258 <main+0xa8>)
  80001f6:	781b      	ldrb	r3, [r3, #0]
- 80001f8:	2b0c      	cmp	r3, #12
- 80001fa:	d102      	bne.n	8000202 <main+0x52>
+ 80001f8:	2b0b      	cmp	r3, #11
+ 80001fa:	d902      	bls.n	8000202 <main+0x52>
 				 hour_counter = 0;
  80001fc:	4b16      	ldr	r3, [pc, #88]	; (8000258 <main+0xa8>)
  80001fe:	2200      	movs	r2, #0
@@ -259,7 +259,7 @@ int main(void)
 	 HAL_Delay(1000);
  8000244:	f44f 707a 	mov.w	r0, #1000	; 0x3e8
  8000248:	f000 f980 	bl	800054c <HAL_Delay>
-	 if(second_counter == 60){
+	 if(second_counter >= 60){
  800024c:	e7b8      	b.n	80001c0 <main+0x10>
  800024e:	bf00      	nop
  8000250:	20000028 	.word	0x20000028
