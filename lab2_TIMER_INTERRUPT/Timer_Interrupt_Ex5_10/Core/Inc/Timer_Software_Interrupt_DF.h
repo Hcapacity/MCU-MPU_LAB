@@ -1,0 +1,34 @@
+/*
+ * Timer_Software_Interrupt_DF.h
+ *
+ *  Created on: Oct 1, 2025
+ *      Author: Hoden
+ */
+
+#ifndef INC_TIMER_SOFTWARE_INTERRUPT_DF_H_
+#define INC_TIMER_SOFTWARE_INTERRUPT_DF_H_
+
+#define MAX_TIMER 3
+
+int timer_counter[MAX_TIMER];
+int timer_flag[MAX_TIMER];
+int TIMER_CYCLE = 10; // It means 10ms for the period of timer interrupt
+
+void settimer_index(int index, int duration){
+	timer_counter[index] = duration / TIMER_CYCLE;
+	timer_flag[index] = 0;
+}
+
+void runtime(){
+	for(int i = 0; i < MAX_TIMER; ++i){
+		if(timer_counter[i] > 0){
+			--timer_counter[i];
+			if(timer_counter[i] == 0){
+				timer_flag[i] = 1;
+			}
+		}
+	}
+}
+
+
+#endif /* INC_TIMER_SOFTWARE_INTERRUPT_DF_H_ */

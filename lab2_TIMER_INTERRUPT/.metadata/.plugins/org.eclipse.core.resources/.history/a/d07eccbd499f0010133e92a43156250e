@@ -1,0 +1,127 @@
+/*
+ * LedMatrix_8x8.h
+ *
+ *  Created on: Oct 1, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_LEDMATRIX_8X8_H_
+#define INC_LEDMATRIX_8X8_H_
+
+int const MAX_LED_MATRIX = 8;
+
+GPIO_TypeDef* COLUMN_PORT[8];
+uint16_t COLUMN_PIN[8];
+GPIO_TypeDef* ROW_PORT[8];
+uint16_t ROW_PIN[8];
+
+int index_led_matrix = 0;
+uint8_t display_buffer[8] = {0x00};
+uint8_t matrix_buffer[8] = {0x01, 0x02, 0x03, 0x04, 0x05, 0x06, 0x07, 0x08};
+
+void MATRIX_8x8_ROW_Init(GPIO_TypeDef* ROW0_PORT, GPIO_TypeDef* ROW1_PORT, GPIO_TypeDef* ROW2_PORT, GPIO_TypeDef* ROW3_PORT,
+		GPIO_TypeDef* ROW4_PORT, GPIO_TypeDef* ROW5_PORT, GPIO_TypeDef* ROW6_PORT, GPIO_TypeDef* ROW7_PORT,
+		uint16_t ROW0_PIN, uint16_t ROW1_PIN, uint16_t ROW2_PIN, uint16_t ROW3_PIN,
+		uint16_t ROW4_PIN, uint16_t ROW5_PIN, uint16_t ROW6_PIN, uint16_t ROW7_PIN){
+	ROW_PORT[0] = ROW0_PORT;
+	ROW_PORT[1] = ROW1_PORT;
+	ROW_PORT[2] = ROW2_PORT;
+	ROW_PORT[3] = ROW3_PORT;
+	ROW_PORT[4] = ROW4_PORT;
+	ROW_PORT[5] = ROW5_PORT;
+	ROW_PORT[6] = ROW6_PORT;
+	ROW_PORT[7] = ROW7_PORT;
+
+	ROW_PIN[0] = ROW0_PIN;
+	ROW_PIN[1] = ROW1_PIN;
+	ROW_PIN[2] = ROW2_PIN;
+	ROW_PIN[3] = ROW3_PIN;
+	ROW_PIN[4] = ROW4_PIN;
+	ROW_PIN[5] = ROW5_PIN;
+	ROW_PIN[6] = ROW6_PIN;
+	ROW_PIN[7] = ROW7_PIN;
+}
+
+void MATRIX_8x8_COLUMN_Init(GPIO_TypeDef* COLUMN0_PORT, GPIO_TypeDef* COLUMN1_PORT, GPIO_TypeDef* COLUMN2_PORT, GPIO_TypeDef* COLUMN3_PORT,
+		GPIO_TypeDef* COLUMN4_PORT, GPIO_TypeDef* COLUMN5_PORT, GPIO_TypeDef* COLUMN6_PORT, GPIO_TypeDef* COLUMN7_PORT,
+		uint16_t COLUMN0_PIN, uint16_t COLUMN1_PIN, uint16_t COLUMN2_PIN, uint16_t COLUMN3_PIN,
+		uint16_t COLUMN4_PIN, uint16_t COLUMN5_PIN, uint16_t COLUMN6_PIN, uint16_t COLUMN7_PIN){
+	COLUMN_PORT[0] = COLUMN0_PORT;
+	COLUMN_PORT[1] = COLUMN1_PORT;
+	COLUMN_PORT[2] = COLUMN2_PORT;
+	COLUMN_PORT[3] = COLUMN3_PORT;
+	COLUMN_PORT[4] = COLUMN4_PORT;
+	COLUMN_PORT[5] = COLUMN5_PORT;
+	COLUMN_PORT[6] = COLUMN6_PORT;
+	COLUMN_PORT[7] = COLUMN7_PORT;
+
+	COLUMN_PIN[0] = COLUMN0_PIN;
+	COLUMN_PIN[1] = COLUMN1_PIN;
+	COLUMN_PIN[2] = COLUMN2_PIN;
+	COLUMN_PIN[3] = COLUMN3_PIN;
+	COLUMN_PIN[4] = COLUMN4_PIN;
+	COLUMN_PIN[5] = COLUMN5_PIN;
+	COLUMN_PIN[6] = COLUMN6_PIN;
+	COLUMN_PIN[7] = COLUMN7_PIN;
+}
+
+// Set Col 0->ENA, 1->UNA
+void MATRIX_COL_ENA(int index){
+	for(int i = 0; i < MAX_LED_MATRIX; ++i){
+		if(i == index) HAL_GPIO_WritePin(COLUMN_PORT[i], COLUMN_PIN[i], 0);
+		else HAL_GPIO_WritePin(COLUMN_PORT[i], COLUMN_PIN[i], 1);
+	}
+}
+
+//Set Row 0->ON, 1->OFF, 0xXXXX-> bit containing 1 will be on.
+void MATRIX_ROW_DISPLAY(uint8_t ch){
+	for(int i = 0; i < MAX_LED_MATRIX; ++i){
+		HAL_GPIO_WritePin(ROW_PORT[i], ROW_PIN[i], ((ch >> i) & 0x01) ^ 0x01);
+	}
+}
+
+void SetUp_MATRIX_BUFFER(uint8_t* buffer){
+	for(int i = 0; i < MAX_LED_MATRIX; ++i){
+		matrix_buffer[i] = *(buffer++);
+	}
+}
+
+void updateLEDMatrix(int index){
+	switch(index){
+	case 0:
+		MATRIX_COL_ENA(index);
+		MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+		break;
+	case 1:
+			MATRIX_COL_ENA(index);
+			MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+			break;
+	case 2:
+			MATRIX_COL_ENA(index);
+			MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+			break;
+	case 3:
+			MATRIX_COL_ENA(index);
+			MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+			break;
+	case 4:
+			MATRIX_COL_ENA(index);
+			MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+			break;
+	case 5:
+			MATRIX_COL_ENA(index);
+			MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+			break;
+	case 6:
+			MATRIX_COL_ENA(index);
+			MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+			break;
+	case 7:
+			MATRIX_COL_ENA(index);
+			MATRIX_ROW_DISPLAY(matrix_buffer[index]);
+			break;
+	}
+}
+
+
+#endif /* INC_LEDMATRIX_8X8_H_ */
