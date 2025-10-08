@@ -1,0 +1,111 @@
+/*
+ * Timer_Interupt.h
+ *
+ *  Created on: Sep 28, 2025
+ *      Author: Hoden
+ */
+
+#ifndef INC_TIMER_INTERRUPT_H_
+#define INC_TIMER_INTERRUPT_H_
+
+#include <stdint.h>
+
+typedef struct TIM_ITR_Node{
+	uint8_t flag;
+	uint16_t duration;
+	uint16_t def_duration;
+	struct TIM_ITR_Node* Next_TIM_Node;
+} TIM_ITR_Node;
+
+
+
+void Initial_TIM_ITR_Node(TIM_ITR_Node* Timer, uint16_t duration);
+void Add_TIM_ITR_Node(TIM_ITR_Node* head, TIM_ITR_Node* newNode);
+TIM_ITR_Node* DeleteHead_TIM_ITR_Node(TIM_ITR_Node* head);
+void RunTime(TIM_ITR_Node* head);
+uint8_t TIM_CheckAndClear(TIM_ITR_Node* t);
+
+
+void Initial_TIM_ITR_Node(TIM_ITR_Node* Timer, uint16_t duration){
+	Timer->flag = 0;
+	Timer->duration = duration;
+	Timer->def_duration = duration;
+	Timer->Next_TIM_Node = NULL;
+}
+
+void Add_TIM_ITR_Node(TIM_ITR_Node* head, TIM_ITR_Node* newNode){
+	if(head == NULL) return;
+
+	// Add at head
+	if(head->duration > newNode->duration){
+		newNode->Next_TIM_Node = head;
+		head = newNode;
+	}
+
+	// Add at other positions
+	else{
+		TIM_ITR_Node* iterator = head;
+		while(iterator != NULL){
+
+			if(iterator->duration <= newNode->duration){
+				newNode->duration -= iterator->duration;
+			}
+
+			if(iterator->Next_TIM_Node == NULL) {
+				break;
+			}
+			else if(newNode->duration < iterator->Next_TIM_Node->duration){
+				break;
+			}
+			else{
+				iterator = iterator->Next_TIM_Node;
+			}
+
+		}
+
+		// Reduce the duration for the Node after added Node
+		if(iterator->Next_TIM_Node != NULL){
+			TIM_ITR_Node* Reduce_iterator = iterator->Next_TIM_Node;
+			while(Reduce_iterator != NULL){
+				Reduce_iterator -= newNode->duration;
+				Reduce_iterator = Reduce_iterator->Next_TIM_Node;
+			}
+		}
+
+		// Add newNode in Linklist
+		newNode->Next_TIM_Node = iterator->Next_TIM_Node;
+		iterator->Next_TIM_Node = newNode;
+
+	}
+
+}
+
+TIM_ITR_Node* HandleFlagOn_TIM_ITR_Node(TIM_ITR_Node* head){
+	while(head->duration == 0){
+		TIM_ITR_Node* newNode = head;
+		head = head->Next_TIM_Node;
+		newNode->duration = newNode->def_duration;
+		newNode->Next_TIM_Node = NULL;
+		newNode->flag = 1;
+
+		Add_TIM_ITR_Node(head, newNode);
+	}
+
+	return head;
+}
+
+void RunTime(TIM_ITR_Node* head){
+	--head->duration;
+	if(head->duration == 0){
+		head->flag = 1;
+	}
+}
+
+uint8_t TIM_CheckAndClear(TIM_ITR_Node* t){
+	uint8_t f = t->flag;
+	t->flag = 0;
+	return f;
+}
+
+
+#endif /* INC_TIMER_INTERRUPT_H_ */

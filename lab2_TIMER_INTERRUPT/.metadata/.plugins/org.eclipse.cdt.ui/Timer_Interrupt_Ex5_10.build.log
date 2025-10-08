@@ -1,0 +1,10 @@
+21:24:28 **** Incremental Build of configuration Debug for project Timer_Interrupt_Ex5_10 ****
+make -j16 all 
+arm-none-eabi-size   Timer_Interrupt_Ex5_10.elf 
+   text	   data	    bss	    dec	    hex	filename
+   9128	     44	   1804	  10976	   2ae0	Timer_Interrupt_Ex5_10.elf
+Finished building: default.size.stdout
+ 
+
+21:24:28 Build Finished. 0 errors, 0 warnings. (took 154ms)
+
