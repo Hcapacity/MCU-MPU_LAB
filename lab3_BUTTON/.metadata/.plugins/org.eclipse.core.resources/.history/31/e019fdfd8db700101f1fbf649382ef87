@@ -1,0 +1,246 @@
+/*
+ * Process.h
+ *
+ *  Created on: Nov 2, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_PROCESS_H_
+#define INC_PROCESS_H_
+
+#include "Button.h"
+#include "Global.h"
+#include "Led_Display.h"
+#include "Light_Display.h"
+#include "Software_Timer.h"
+
+// Timer0 -> 1s (Change Value of 7seg, Duration for LEDs)
+// Timer1 -> 250ms (Blink LEDs)
+// Timer2 -> 50ms (Scan LEDs)
+
+void fsm_processing_trafficlight(){
+	int num1, num2;
+
+	switch(light_state1){
+	case RED_STATE:
+		RGB_TrafficLight_TurnOn(RGB_tl1, 0);
+		if(Red_Counter_temp == 0){
+			Red_Counter_temp = Red_counter;
+			light_state1 = BLUE_STATE;
+			break;
+		}
+		num1 = Red_Counter_temp;
+		if(timer_flag[0] == 1){
+			Red_Counter_Temp--;
+			settimer_index(0, 1000);
+		}
+		break;
+	case BLUE_STATE:
+		RGB_TrafficLight_TurnOn(RGB_tl1, 1);
+		if(Blue_Counter_temp == 0){
+			Blue_Counter_temp = Blue_counter;
+			light_state1 = YELLOW_STATE;
+			break;
+		}
+		num1 = Blue_Counter_temp;
+		if(timer_flag[0] == 1){
+			Blue_Counter_Temp--;
+			settimer_index(0, 1000);
+		}
+		break;
+	case YELLOW_STATE:
+		RGB_TrafficLight_TurnOn(RGB_tl1, 2);
+		if(Yellow_Counter_temp == 0){
+			Yellow_Counter_temp = Yellow_counter;
+			light_state1 = RED_STATE;
+			break;
+		}
+		num1 = Yellow_Counter_temp;
+		if(timer_flag[0] == 1){
+			Yellow_Counter_temp--;
+			settimer_index(0, 1000);
+		}
+		break;
+	}
+
+	switch(light_state2){
+	case RED_STATE:
+		RGB_TrafficLight_TurnOn(RGB_tl2, 0);
+		if(Red_Counter_temp == 0){
+			Red_Counter_temp = Red_counter;
+			light_state2 = BLUE_STATE;
+			break;
+		}
+		num2 = Red_Counter_temp;
+		if(timer_flag[0] == 1){
+			Red_Counter_Temp--;
+			settimer_index(0, 1000);
+		}
+		break;
+	case BLUE_STATE:
+		RGB_TrafficLight_TurnOn(RGB_tl2, 1);
+		if(Blue_Counter_temp == 0){
+			Blue_Counter_temp = Blue_counter;
+			light_state2 = YELLOW_STATE;
+			break;
+		}
+		num2 = Blue_Counter_temp;
+		if(timer_flag[0] == 1){
+			Blue_Counter_Temp--;
+			settimer_index(0, 1000);
+		}
+		break;
+	case YELLOW_STATE:
+		RGB_TrafficLight_TurnOn(RGB_tl2, 2);
+		if(Yellow_Counter_temp == 0){
+			Yellow_Counter_temp = Yellow_counter;
+			light_state2 = RED_STATE;
+			break;
+		}
+		num2 = Yellow_Counter_temp;
+		if(timer_flag[0] == 1){
+			Yellow_Counter_temp--;
+			settimer_index(0, 1000);
+		}
+		break;
+	}
+
+	if(timer_flag[2] == 1){
+		Scan_Led(num1, num2);
+		settimer_index(2, 50);
+	}
+
+}
+
+
+//*************************************//
+// RULE: IF AFTER SAVE BLUE STATE, RED_DURATION != YELLOW_DURATION + BLUE_DURATION --> SET THE DEFAULT VALUE FOR THEM! //
+void fsm_processing_system(){
+	switch(System_state){
+	case AUTO_STATE:
+		// Run Traffic Light normally
+		fsm_processing_trafficlight();
+
+		if(is_button_pressed(0)){
+			System_state = FIX_RED_STATE;
+
+			RGB_TrafficLight_Blink(RGB_tl1, 0);
+			RGB_TrafficLight_Blink(RGB_tl2, 0);
+
+			settimer_index(1, 250);
+		}
+		break;
+
+	case FIX_RED_STATE:
+		// Blink Red Led 2hz
+		// Button2 -> increase the time duration value for red LEDs (press -> increase 1, hold press -> increase 1 each second)
+		// Note: Range Led Counter = 1-99
+		// Button3 -> Set value (value isnot saved if dont press this Button)
+
+		if(timer_flag[1] == 1){
+			RGB_TrafficLight_Blink(RGB_tl1, 0);
+			RGB_TrafficLight_Blink(RGB_tl2, 0);
+
+			settimer_index(1, 250);
+		}
+
+		settimer_index(3, 10);
+		if(is_button_pressed(2) && timer_flag[3] == 1){
+			settimer_index(3, 1000);
+			Pre_Red_Counter++;
+		}
+
+		if(is_button_pressed(3)){
+			Red_Counter = Pre_Red_Counter;
+		}
+
+		if(is_button_pressed(1)){
+			if(Red_Counter != Pre_Red_Counter){
+				Pre_Red_Counter = Red_Counter;
+			}
+			System_state = FIX_YELLOW_STATE;
+
+			RGB_TrafficLight_Blink(RGB_tl1, 2);
+			RGB_TrafficLight_Blink(RGB_tl2, 2);
+
+			settimer_index(1, 250);
+		}
+
+		break;
+	case FIX_YELLOW_STATE:
+		// Blink Yellow Led 2hz
+		// Button2 -> increase the time duration value for Yellow LEDs (press -> increase 1, hold press -> increase 1 each second)
+		// Note: Range Yellow Counter = 1-99
+		// Button3 -> Set value
+
+		if(timer_flag[1] == 1){
+			RGB_TrafficLight_Blink(RGB_tl1, 2);
+			RGB_TrafficLight_Blink(RGB_tl2, 2);
+
+			settimer_index(1, 250);
+		}
+
+		settimer_index(3, 10);
+		if(is_button_pressed(2) && timer_flag[3] == 1){
+			settimer_index(3, 1000);
+			Pre_Yellow_Counter++;
+		}
+
+		if(is_button_pressed(3)){
+			Yellow_Counter = Pre_Yellow_Counter;
+		}
+
+		if(is_button_pressed(1)){
+			if(Yellow_Counter != Pre_Yellow_Counter){
+				Pre_Yellow_Counter = Yellow_Counter;
+			}
+			System_state = FIX_BLUE_STATE;
+
+			RGB_TrafficLight_Blink(RGB_tl1, 1);
+			RGB_TrafficLight_Blink(RGB_tl2, 1);
+
+			settimer_index(1, 250);
+		}
+
+		break;
+	case FIX_BLUE_STATE:
+		// Blink Blue Led 2hz
+		// Button2 -> increase the time duration value for Blue LEDs (press -> increase 1, hold press -> increase 1 each second)
+		// Note: Range Blue Counter = 1-99
+		// Button3 -> Set value
+
+		if(timer_flag[1] == 1){
+			RGB_TrafficLight_Blink(RGB_tl1, 1);
+			RGB_TrafficLight_Blink(RGB_tl2, 1);
+
+			settimer_index(1, 250);
+		}
+
+		settimer_index(3, 10);
+		if(is_button_pressed(2) && timer_flag[3] == 1){
+			settimer_index(3, 1000);
+			Pre_Blue_Counter++;
+		}
+
+		if(is_button_pressed(3)){
+			Blue_Counter = Pre_Blue_Counter;
+		}
+
+		if(is_button_pressed(1)){
+			if(Blue_Counter != Pre_Blue_Counter){
+				Pre_Blue_Counter = Blue_Counter;
+			}
+			System_state = FIX_BLUE_STATE;
+
+			RGB_TrafficLight_Blink(RGB_tl1, 1);
+			RGB_TrafficLight_Blink(RGB_tl2, 1);
+
+			settimer_index(1, 250);
+		}
+
+		break;
+	}
+}
+
+
+#endif /* INC_PROCESS_H_ */

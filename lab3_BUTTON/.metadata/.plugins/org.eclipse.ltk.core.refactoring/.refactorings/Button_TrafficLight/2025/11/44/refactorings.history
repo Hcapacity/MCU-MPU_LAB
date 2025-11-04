@@ -1,0 +1,4 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<session version="1.0">
+<refactoring comment="Rename resource &apos;Button_TrafficLight/Core/Inc/Light_Display&apos; to &apos;Light_Display.h&apos;" description="Rename resource &apos;Light_Display&apos;" flags="7" id="org.eclipse.ltk.core.refactoring.rename.resource" input="Core/Inc/Light_Display" name="Light_Display.h" stamp="1762009926955" updateReferences="true"/>
+</session>

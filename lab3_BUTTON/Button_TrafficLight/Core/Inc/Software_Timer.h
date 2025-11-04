@@ -1,0 +1,20 @@
+/*
+ * Software_Timer.h
+ *
+ *  Created on: Oct 29, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_SOFTWARE_TIMER_H_
+#define INC_SOFTWARE_TIMER_H_
+
+#include "main.h"
+
+#define MAX_TIMER 3
+
+extern uint8_t timer_flag[MAX_TIMER];
+
+void settimer_index(int index, int duration);
+void runtime();
+
+#endif /* INC_SOFTWARE_TIMER_H_ */

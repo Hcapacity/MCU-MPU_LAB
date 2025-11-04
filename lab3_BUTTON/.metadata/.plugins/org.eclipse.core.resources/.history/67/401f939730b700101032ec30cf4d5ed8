@@ -1,0 +1,101 @@
+/*
+ * Led_Display.h
+ *
+ *  Created on: Oct 29, 2025
+ *      Author: Hoden
+ */
+
+#ifndef INC_LED_DISPLAY_H_
+#define INC_LED_DISPLAY_H_
+
+#include "main.h"
+
+const int MAX_LED = 4;
+int index_led = 0;
+int counter = 0;
+int led_buffer[4];
+
+void updateClockBuffer(int timer, int state){
+	led_buffer[0] = hour/10;
+	led_buffer[1] = hour%10;
+	led_buffer[2] = minute/10;
+	led_buffer[3] = minute%10;
+}
+//****************************************************************************//
+
+void display7SEG(uint8_t counter){
+	// The first condition -> Turn on LED
+	// Config SEG A
+	if(counter != 1 && counter != 4){
+		HAL_GPIO_WritePin(GPIOB, SEG0_Pin, GPIO_PIN_RESET);
+	}
+	else HAL_GPIO_WritePin(GPIOB, SEG0_Pin, GPIO_PIN_SET);
+
+	// Config SEG B
+	if(counter != 5 && counter != 6){
+		HAL_GPIO_WritePin(GPIOB, SEG1_Pin, GPIO_PIN_RESET);
+	}
+	else HAL_GPIO_WritePin(GPIOB, SEG1_Pin, GPIO_PIN_SET);
+
+	// Config SEG C
+	if(counter != 2){
+		HAL_GPIO_WritePin(GPIOB, SEG2_Pin, GPIO_PIN_RESET);
+	}
+	else HAL_GPIO_WritePin(GPIOB, SEG2_Pin, GPIO_PIN_SET);
+
+	// Config SEG D
+	if(counter != 1 && counter != 4 && counter != 7){
+		HAL_GPIO_WritePin(GPIOB, SEG3_Pin, GPIO_PIN_RESET);
+	}
+	else HAL_GPIO_WritePin(GPIOB, SEG3_Pin, GPIO_PIN_SET);
+
+	// Config SEG E
+	if(counter == 0 || counter == 2 || counter == 6 || counter == 8){
+		HAL_GPIO_WritePin(GPIOB, SEG4_Pin, GPIO_PIN_RESET);
+	}
+	else HAL_GPIO_WritePin(GPIOB, SEG4_Pin, GPIO_PIN_SET);
+
+	// Config SEG F
+	if(counter != 1 && counter != 2 && counter != 3 && counter != 7){
+		HAL_GPIO_WritePin(GPIOB, SEG5_Pin, GPIO_PIN_RESET);
+	}
+	else HAL_GPIO_WritePin(GPIOB, SEG5_Pin, GPIO_PIN_SET);
+
+	// Config SEG G
+	if(counter != 0 && counter != 1 && counter != 7){
+		HAL_GPIO_WritePin(GPIOB, SEG6_Pin, GPIO_PIN_RESET);
+	}
+	else HAL_GPIO_WritePin(GPIOB, SEG6_Pin, GPIO_PIN_SET);
+}
+
+void update7SEG(int index){
+	switch(index){
+		case 0:
+			HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_RESET);
+			HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_SET);
+			display7SEG(led_buffer[0]);
+			break;
+		case 1:
+			HAL_GPIO_WritePin(GPIOA, EN0_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_RESET);
+			display7SEG(led_buffer[1]);
+			break;
+		case 2:
+			HAL_GPIO_WritePin(GPIOA, EN1_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_RESET);
+			display7SEG(led_buffer[2]);
+			break;
+		case 3:
+			HAL_GPIO_WritePin(GPIOA, EN2_Pin, GPIO_PIN_SET);
+			HAL_GPIO_WritePin(GPIOA, EN3_Pin, GPIO_PIN_RESET);
+			display7SEG(led_buffer[3]);
+			break;
+		default:
+			break;
+	}
+}
+
+
+#endif /* INC_LED_DISPLAY_H_ */

@@ -1,0 +1,104 @@
+/*
+ * Button.c
+ *
+ *  Created on: Oct 29, 2025
+ *      Author: Admin
+ */
+
+#include "button.h"
+
+void Button_Init(btn_typedef* btn, uint16_t btn_Pin, GPIO_TypeDef * btn_Port){
+	btn->btn_Pin = btn_Pin;
+	btn->btn_Port = btn_Port;
+
+	btn->btn_state = 0;
+	btn->counterForButtonPress1s = 0;
+	btn->counterForButtonPressDouble = 0;
+	btn->firtpressflag = 0;
+	btn->flagpress = 0;
+	btn->flagForButtonPress1s = 0;
+	btn->flagForButtonPressDouble = 0;
+}
+
+
+void button_reading (btn_typedef* btn){
+
+	btn->debounceButton_3 = btn->debounceButton_2;
+	btn->debounceButton_2 = btn->debounceButton_1;
+	btn->debounceButton_1 = HAL_GPIO_ReadPin(btn->btn_Port, btn->btn_Pin);
+
+	// update state of button
+	if( btn->debounceButton_3 == btn->debounceButton_1){
+		if(btn->btn_state != btn->debounceButton_1){
+			if(btn->debounceButton_1 == BUTTON_IS_PRESSED){
+				btn->flagpress = 1;
+			}
+		btn->btn_state = btn->debounceButton_1;
+		}
+	}
+
+	// checking press every 1s
+	if(btn->btn_state == BUTTON_IS_PRESSED){
+		if( btn->counterForButtonPress1s < DURATION_FOR_AUTO_INCREASING ){
+			++btn->counterForButtonPress1s;
+		} else {
+		btn->flagForButtonPress1s = 1;
+		btn->counterForButtonPress1s = 0;
+		}
+	} else {
+		btn->counterForButtonPress1s = 0;
+		btn->flagForButtonPress1s = 0;
+	}
+
+	// checking press double
+//	if(btn->btn_state == BUTTON_IS_PRESSED && btn->firtpressflag == 0){
+//		btn->firtpressflag = 1;
+//		btn->counterForButtonPressDouble = 0;
+//	}
+
+//	if(btn->firtpressflag == 1){
+//		if(btn->counterForButtonPressDouble >= DOUBLE_PRESS_CHECKIN
+//				&& btn->counterForButtonPressDouble < DOUBLE_PRESS_TIMEOUT){
+//			if(btn->btn_state == BUTTON_IS_PRESSED){
+//				btn->flagForButtonPressDouble = 1;
+//				btn->firtpressflag = 0;
+//				btn->counterForButtonPressDouble = 0;
+//			}
+//		}
+//
+//		if(btn->counterForButtonPressDouble >= DOUBLE_PRESS_TIMEOUT){
+//			btn->firtpressflag = 0;
+//			btn->counterForButtonPressDouble = 0;
+//		}
+//		++btn->counterForButtonPressDouble;
+//	}
+
+}
+
+unsigned char is_button_pressing (btn_typedef* btn){
+	return ( btn->btn_state == BUTTON_IS_PRESSED );
+}
+
+unsigned char is_button_pressed (btn_typedef* btn){
+	if(btn->flagpress){
+		btn->flagpress = 0;
+		return 1;
+	}
+	return 0;
+}
+
+unsigned char is_button_pressed_1s (btn_typedef* btn){
+	if( btn->flagForButtonPress1s == 1){
+		btn->flagForButtonPress1s = 0;
+		return 1;
+	}
+	return 0;
+}
+
+unsigned char is_button_double_press (btn_typedef* btn){
+	if( btn->flagForButtonPressDouble == 1){
+		btn->flagForButtonPressDouble = 0;
+		return 1;
+	}
+	return 0;
+}

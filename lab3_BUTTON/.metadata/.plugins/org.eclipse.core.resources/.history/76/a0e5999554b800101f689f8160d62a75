@@ -1,0 +1,46 @@
+/*
+ * Button.h
+ *
+ *  Created on: Oct 29, 2025
+ *      Author: Hoden
+ */
+
+#ifndef INC_BUTTON_H_
+#define INC_BUTTON_H_
+
+#include "main.h"
+
+
+#define N0_OF_BUTTONS 3
+
+
+#define DURATION_FOR_AUTO_INCREASING 100
+#define DOUBLE_PRESS_CHECKIN 8
+#define DOUBLE_PRESS_TIMEOUT 15
+#define BUTTON_IS_PRESSED GPIO_PIN_RESET
+#define BUTTON_IS_RELEASED GPIO_PIN_SET
+
+
+typedef struct{
+	uint16_t btn_Pin;
+	GPIO_TypeDef * btn_Port;
+
+	GPIO_PinState btn_state;
+	GPIO_PinState debounceButton_1;
+	GPIO_PinState debounceButton_2;
+	GPIO_PinState debounceButton_3;
+
+	uint8_t flagForButtonPress1s;
+	uint8_t flagForButtonPressDouble;
+	uint8_t firtpressflag;
+	uint16_t counterForButtonPress1s;
+	uint16_t counterForButtonPressDouble;
+} btn_typedef;
+
+void Button_Init(btn_typedef* btn, uint16_t btn_Pin, GPIO_TypeDef * btn_Port);
+void button_reading (btn_typedef* btn);
+unsigned char is_button_pressed(btn_typedef* btn);
+unsigned char is_button_pressed_1s(btn_typedef* btn);
+unsigned char is_button_double_press(btn_typedef* btn);
+
+#endif /* INC_BUTTON_H_ */

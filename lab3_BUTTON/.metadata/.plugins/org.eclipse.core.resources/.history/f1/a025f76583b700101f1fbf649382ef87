@@ -1,0 +1,26 @@
+/*
+ * Global.h
+ *
+ *  Created on: Nov 1, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_GLOBAL_H_
+#define INC_GLOBAL_H_
+
+#define AUTO_STATE 0
+#define FIX_RED_STATE 1
+#define FIX_YELLOW_STATE 2
+#define FIX_BLUE_STATE 3
+#define DURATION_RED 5
+#define DURATION_YELLOW 2
+#define DURATION_BLUE 3
+
+uint8_t light_state = 0;
+
+uint8_t Red_Counter = DURATION_RED;
+uint8_t Yellow_Counter = DURATION_YELLOW;
+uint8_t Blue_Counter = DURATION_BLUE;
+
+
+#endif /* INC_GLOBAL_H_ */

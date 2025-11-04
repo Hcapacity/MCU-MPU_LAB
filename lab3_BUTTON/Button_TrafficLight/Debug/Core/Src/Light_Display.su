@@ -1,0 +1,3 @@
+Light_Display.c:10:6:RGB_TrafficLight_Init	24	static
+Light_Display.c:21:6:RGB_TrafficLight_TurnOn	16	static
+Light_Display.c:39:6:RGB_TrafficLight_Blink	16	static

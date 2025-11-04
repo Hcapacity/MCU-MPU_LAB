@@ -1,0 +1,23 @@
+17:27:19 **** Incremental Build of configuration Debug for project Button_TrafficLight ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/Process.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/Process.d" -MT"Core/Src/Process.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/Process.o"
+arm-none-eabi-gcc -o "Button_TrafficLight.elf" @"objects.list"   -mcpu=cortex-m3 -T"D:\CACMONDAICUONG(1)\HK251\VXL_VDK\LAB\lab3_BUTTON\Button_TrafficLight\STM32F103C6UX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Button_TrafficLight.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Button_TrafficLight.elf
+ 
+arm-none-eabi-size   Button_TrafficLight.elf 
+arm-none-eabi-objdump -h -S  Button_TrafficLight.elf  > "Button_TrafficLight.list"
+arm-none-eabi-objcopy  -O ihex  Button_TrafficLight.elf  "Button_TrafficLight.hex"
+   text	   data	    bss	    dec	    hex	filename
+  10592	     40	   1784	  12416	   3080	Button_TrafficLight.elf
+arm-none-eabi-objcopy  -O binary  Button_TrafficLight.elf  "Button_TrafficLight.bin"
+Finished building: default.size.stdout
+ 
+Finished building: Button_TrafficLight.hex
+Finished building: Button_TrafficLight.bin
+ 
+ 
+Finished building: Button_TrafficLight.list
+ 
+
+17:27:19 Build Finished. 0 errors, 0 warnings. (took 555ms)
+

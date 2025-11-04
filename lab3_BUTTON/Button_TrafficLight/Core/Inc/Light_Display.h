@@ -1,0 +1,36 @@
+/*
+ * Light_Display.h
+ *
+ *  Created on: Nov 1, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_LIGHT_DISPLAY_H_
+#define INC_LIGHT_DISPLAY_H_
+
+#include "main.h"
+
+#define RED_STATE 0
+#define GREEN_STATE 1
+#define YELLOW_STATE 2
+
+
+typedef struct {
+	uint16_t RED_Pin;
+	uint16_t YELLOW_Pin;
+	uint16_t GREEN_Pin;
+
+	GPIO_TypeDef * RED_Port;
+	GPIO_TypeDef * YELLOW_Port;
+	GPIO_TypeDef * GREEN_Port;
+
+} RGB_TrafficLight_t;
+
+void RGB_TrafficLight_Init(RGB_TrafficLight_t* RGB_tl, uint16_t RED_Pin, uint16_t YELLOW_Pin, uint16_t GREEN_Pin,
+	GPIO_TypeDef * RED_Port, GPIO_TypeDef * YELLOW_Port, GPIO_TypeDef * GREEN_Port);
+void RGB_TrafficLight_TurnOn(RGB_TrafficLight_t* RGB_tl, uint8_t State);
+void RGB_TrafficLight_Blink(RGB_TrafficLight_t* RGB_tl, uint8_t State);
+
+
+
+#endif /* INC_LIGHT_DISPLAY_H_ */

@@ -1,0 +1,20 @@
+/*
+ * Led_Display.h
+ *
+ *  Created on: Oct 29, 2025
+ *      Author: Hoden
+ */
+
+#ifndef INC_LED_DISPLAY_H_
+#define INC_LED_DISPLAY_H_
+
+#include "main.h"
+
+extern int index_led;
+
+void updateClockBuffer(int num1, int num2);
+void display7SEG(uint8_t counter);
+void update7SEG(int index);
+void Scan_Led(int num1, int num2);
+
+#endif /* INC_LED_DISPLAY_H_ */

@@ -1,0 +1,28 @@
+/*
+ * Software_Timer.c
+ *
+ *  Created on: Oct 29, 2025
+ *      Author: Hoden
+ */
+
+#include "Software_Timer.h"
+
+static int timer_counter[MAX_TIMER];
+uint8_t timer_flag[MAX_TIMER];
+static int TIMER_CYCLE = 10; // It means 10ms for the period of timer interrupt
+
+void settimer_index(int index, int duration){
+	timer_counter[index] = duration / TIMER_CYCLE;
+	timer_flag[index] = 0;
+}
+
+void runtime(){
+	for(int i = 0; i < MAX_TIMER; ++i){
+		if(timer_counter[i] > 0){
+			--timer_counter[i];
+			if(timer_counter[i] == 0){
+				timer_flag[i] = 1;
+			}
+		}
+	}
+}

@@ -1,0 +1,308 @@
+/*
+ * Process.c
+ *
+ *  Created on: Nov 2, 2025
+ *      Author: Admin
+ */
+
+#include "Process.h"
+
+static uint8_t system_state = AUTO_STATE;
+static uint8_t light_state1 = RED_STATE;
+static uint8_t light_state2 = GREEN_STATE;
+
+static uint8_t Pre_Red_Counter = DURATION_RED;
+static uint8_t Pre_Yellow_Counter = DURATION_YELLOW;
+static uint8_t Pre_Green_Counter = DURATION_GREEN;
+
+static uint8_t Red_Counter = DURATION_RED;
+static uint8_t Yellow_Counter = DURATION_YELLOW;
+static uint8_t Green_Counter = DURATION_GREEN;
+
+static uint8_t Red_Counter_temp1 = DURATION_RED;
+static uint8_t Yellow_Counter_temp1 = DURATION_YELLOW;
+static uint8_t Green_Counter_temp1 = DURATION_GREEN;
+
+static uint8_t Red_Counter_temp2 = DURATION_RED;
+static uint8_t Yellow_Counter_temp2 = DURATION_YELLOW;
+static uint8_t Green_Counter_temp2 = DURATION_GREEN;
+
+static uint8_t num1 = 0;
+static uint8_t num2 = 0;
+
+
+// Timer0 -> 1s (Change Value of 7seg, Duration for LEDs)
+// Timer1 -> 250ms (Blink LEDs)
+// Timer2 -> 250ms (Scan LEDs)
+
+void fsm_processing_trafficlight(RGB_TrafficLight_t* RGB_tl1, RGB_TrafficLight_t* RGB_tl2){
+
+	if(timer_flag[0] == 1){
+		settimer_index(0, 1000);
+		switch(light_state1){
+		case RED_STATE:
+			RGB_TrafficLight_TurnOn(RGB_tl1, 0);
+
+			if(Red_Counter_temp1 == 0){
+				Red_Counter_temp1 = Red_Counter;
+
+				RGB_TrafficLight_TurnOn(RGB_tl1, 1);
+				num1 = Green_Counter_temp1--;
+				light_state1 = GREEN_STATE;
+				break;
+			}
+
+			num1 = Red_Counter_temp1--;
+			break;
+		case GREEN_STATE:
+			RGB_TrafficLight_TurnOn(RGB_tl1, 1);
+			if(Green_Counter_temp1 == 0){
+				Green_Counter_temp1 = Green_Counter;
+
+				RGB_TrafficLight_TurnOn(RGB_tl1, 2);
+				num1 = Yellow_Counter_temp1--;
+				light_state1 = YELLOW_STATE;
+				break;
+			}
+
+			num1 = Green_Counter_temp1--;
+			break;
+		case YELLOW_STATE:
+			RGB_TrafficLight_TurnOn(RGB_tl1, 2);
+			if(Yellow_Counter_temp1 == 0){
+				Yellow_Counter_temp1 = Yellow_Counter;
+
+				RGB_TrafficLight_TurnOn(RGB_tl1, 0);
+				num1 = Red_Counter_temp1--;
+				light_state1 = RED_STATE;
+				break;
+			}
+
+			num1 = Yellow_Counter_temp1--;
+			break;
+		}
+
+		switch(light_state2){
+		case RED_STATE:
+			RGB_TrafficLight_TurnOn(RGB_tl2, 0);
+
+			if(Red_Counter_temp2 == 0){
+				Red_Counter_temp2 = Red_Counter;
+
+				RGB_TrafficLight_TurnOn(RGB_tl2, 1);
+				num2 = Green_Counter_temp2--;
+				light_state2 = GREEN_STATE;
+				break;
+			}
+
+			num2 = Red_Counter_temp2--;
+			break;
+		case GREEN_STATE:
+			RGB_TrafficLight_TurnOn(RGB_tl2, 1);
+			if(Green_Counter_temp2 == 0){
+				Green_Counter_temp2 = Green_Counter;
+
+				RGB_TrafficLight_TurnOn(RGB_tl2, 2);
+				num2 = Yellow_Counter_temp2--;
+				light_state2 = YELLOW_STATE;
+				break;
+			}
+
+			num2 = Green_Counter_temp2--;
+			break;
+		case YELLOW_STATE:
+			RGB_TrafficLight_TurnOn(RGB_tl2, 2);
+			if(Yellow_Counter_temp2 == 0){
+				Yellow_Counter_temp2 = Yellow_Counter;
+
+				RGB_TrafficLight_TurnOn(RGB_tl2, 0);
+				num2 = Red_Counter_temp2--;
+				light_state2 = RED_STATE;
+				break;
+			}
+
+			num2 = Yellow_Counter_temp2--;
+			break;
+		}
+	}
+
+	if(timer_flag[2] == 1){
+		settimer_index(2, 250);
+		Scan_Led(num1, num2);
+	}
+
+}
+
+
+//*************************************//
+// RULE: IF AFTER SAVE GREEN STATE, RED_DURATION != YELLOW_DURATION + GREEN_DURATION --> SET THE DEFAULT VALUE FOR THEM! //
+void fsm_processing_system(btn_typedef* btn, RGB_TrafficLight_t* RGB_tl1, RGB_TrafficLight_t* RGB_tl2){
+
+	switch(system_state){
+	case AUTO_STATE:
+		// Run Traffic Light normally
+
+		if(is_button_pressed(&btn[0])){
+			timer_flag[1] = 1;
+			timer_flag[2] = 1;
+			system_state = FIX_RED_STATE;
+			index_led = 0;
+			updateClockBuffer(system_state, Pre_Red_Counter);
+			break;
+		}
+
+		fsm_processing_trafficlight(RGB_tl1, RGB_tl2);
+		break;
+
+	case FIX_RED_STATE:
+		// Blink Red Led 2hz
+		// Button2 -> increase the time duration value for red LEDs (press -> increase 1, hold press -> increase 1 each second)
+		// Note: Range Led Counter = 1-99
+		// Button3 -> Set value (value isnot saved if dont press this Button)
+
+		if(is_button_pressed(&btn[0])){
+			if(Red_Counter != Pre_Red_Counter){
+				Pre_Red_Counter = Red_Counter;
+			}
+			timer_flag[1] = 1;
+			timer_flag[2] = 1;
+			index_led = 0;
+			system_state = FIX_YELLOW_STATE;
+			updateClockBuffer(system_state, Pre_Yellow_Counter);
+			break;
+		}
+
+		if(is_button_pressed(&btn[1])){
+			Pre_Red_Counter++;
+			if(Pre_Red_Counter >= 100) Pre_Red_Counter = 1;
+			updateClockBuffer(system_state, Pre_Red_Counter);
+			index_led = 0;
+		}
+
+		if(is_button_pressed(&btn[2])){
+			Red_Counter = Pre_Red_Counter;
+		}
+
+		//Scan LED
+		if(timer_flag[1] == 1){
+			settimer_index(1, 250);
+			RGB_TrafficLight_Blink(RGB_tl1, 0);
+			RGB_TrafficLight_Blink(RGB_tl2, 0);
+
+			if(index_led >= 4) index_led = 0;
+			update7SEG(index_led++);
+		}
+
+		break;
+
+	case FIX_YELLOW_STATE:
+		// Blink Yellow Led 2hz
+		// Button2 -> increase the time duration value for Yellow LEDs (press -> increase 1, hold press -> increase 1 each second)
+		// Note: Range Yellow Counter = 1-99
+		// Button3 -> Set value
+
+		if(is_button_pressed(&btn[0])){
+			settimer_index(1, 250);
+			if(Yellow_Counter != Pre_Yellow_Counter){
+				Pre_Yellow_Counter = Yellow_Counter;
+			}
+			timer_flag[1] = 1;
+			timer_flag[2] = 1;
+			index_led = 0;
+			system_state = FIX_GREEN_STATE;
+			updateClockBuffer(system_state, Pre_Green_Counter);
+			break;
+		}
+
+		if(is_button_pressed_1s(&btn[1])){
+			Pre_Yellow_Counter++;
+			if(Pre_Yellow_Counter >= 100) Pre_Yellow_Counter = 1;
+		}
+		else {
+			if(is_button_pressed(&btn[1])){
+				Pre_Yellow_Counter++;
+				if(Pre_Yellow_Counter >= 100) Pre_Yellow_Counter = 1;
+				updateClockBuffer(system_state, Pre_Yellow_Counter);
+				index_led = 0;
+			}
+		}
+
+		if(is_button_pressed(&btn[2])){
+			Yellow_Counter = Pre_Yellow_Counter;
+		}
+
+		//Scan LED
+		if(timer_flag[1] == 1){
+			settimer_index(1, 250);
+			RGB_TrafficLight_Blink(RGB_tl1, 2);
+			RGB_TrafficLight_Blink(RGB_tl2, 2);
+
+			if(index_led >= 4) index_led = 0;
+			update7SEG(index_led++);
+		}
+
+		break;
+	case FIX_GREEN_STATE:
+		// Blink GREEN Led 2hz
+		// Button2 -> increase the time duration value for GREEN LEDs (press -> increase 1, hold press -> increase 1 each second)
+		// Note: Range GREEN Counter = 1-99
+		// Button3 -> Set value
+
+		if(is_button_pressed(&btn[0])){
+			timer_flag[0] = 1;
+			timer_flag[1] = 1;
+			timer_flag[2] = 1;
+			index_led = 0;
+
+			if(Green_Counter != Pre_Green_Counter){
+				Pre_Green_Counter = Green_Counter;
+			}
+
+			uint8_t Red_Check = Green_Counter + Yellow_Counter;
+			if(Red_Counter != Red_Check){
+				Pre_Red_Counter = DURATION_RED;
+				Pre_Yellow_Counter = DURATION_YELLOW;
+				Pre_Green_Counter = DURATION_GREEN;
+
+				Red_Counter = DURATION_RED;
+				Yellow_Counter = DURATION_YELLOW;
+				Green_Counter = DURATION_GREEN;
+			}
+
+			Red_Counter_temp1 = Red_Counter;
+			Yellow_Counter_temp1 = Yellow_Counter;
+			Green_Counter_temp1 = Green_Counter;
+
+			Red_Counter_temp2 = Red_Counter;
+			Yellow_Counter_temp2 = Yellow_Counter;
+			Green_Counter_temp2 = Green_Counter;
+			light_state1 = RED_STATE;
+			light_state2 = GREEN_STATE;
+			system_state = AUTO_STATE;
+
+			break;
+		}
+
+		if(is_button_pressed(&btn[1])){
+			Pre_Green_Counter++;
+			if(Pre_Green_Counter >= 100) Pre_Green_Counter = 1;
+			updateClockBuffer(system_state, Pre_Green_Counter);
+			index_led = 0;
+		}
+
+		if(is_button_pressed(&btn[2])){
+			Green_Counter = Pre_Green_Counter;
+		}
+
+		//Scan LED
+		if(timer_flag[1] == 1){
+			settimer_index(1, 250);
+			RGB_TrafficLight_Blink(RGB_tl1, 1);
+			RGB_TrafficLight_Blink(RGB_tl2, 1);
+			if(index_led >= 4) index_led = 0;
+			update7SEG(index_led++);
+		}
+
+		break;
+	}
+}

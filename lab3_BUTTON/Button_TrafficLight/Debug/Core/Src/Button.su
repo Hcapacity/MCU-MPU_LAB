@@ -1,0 +1,6 @@
+Button.c:10:6:Button_Init	24	static
+Button.c:24:6:button_reading	16	static
+Button.c:78:15:is_button_pressing	16	static
+Button.c:82:15:is_button_pressed	16	static
+Button.c:90:15:is_button_pressed_1s	16	static
+Button.c:98:15:is_button_double_press	16	static

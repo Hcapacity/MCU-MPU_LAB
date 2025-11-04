@@ -1,0 +1,77 @@
+/*
+ * Light_Display.h
+ *
+ *  Created on: Nov 1, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_LIGHT_DISPLAY_H_
+#define INC_LIGHT_DISPLAY_H_
+
+#include "main.h"
+
+#define RED_STATE 0
+#define BLUE_STATE 1
+#define YELLOW_STATE 2
+
+struct {
+	uint16_t RED_Pin;
+	uint16_t YELLOW_Pin;
+	uint16_t BLUE_Pin;
+
+	GPIO_TypeDef * RED_Port;
+	GPIO_TypeDef * YELLOW_Port;
+	GPIO_TypeDef * BLUE_Port;
+
+} RGB_TrafficLight_t;
+
+void RGB_TrafficLight_Init(RGB_TrafficLight_t* RGB_tl, uint16_t RED_Pin, uint16_t YELLOW_Pin, uint16_t BLUE_Pin,
+	GPIO_TypeDef * RED_Port, GPIO_TypeDef * YELLOW_Port, GPIO_TypeDef * BLUE_Port){
+	RGB_tl->RED_Pin = RED_Pin;
+	RGB_tl->YELLOW_Pin = YELLOW_Pin;
+	RGB_tl->BLUE_Pin = BLUE_Pin;
+
+	RGB_tl->RED_Port = RED_Port;
+	RGB_tl->YELLOW_Port = YELLOW_Port;
+	RGB_tl->BLUE_Port = BLUE_Port;
+}
+
+void RGB_TrafficLight_TurnOn(RGB_TrafficLight_t* RGB_tl, uint8_t State){
+	if(State == RED_STATE){
+		HAL_GPIO_WritePin(RGB_tl->RED_Port, RGB_tl->RED_Pin, 0);
+		HAL_GPIO_WritePin(RGB_tl->YELLOW_Port, RGB_tl->YELLOW_Pin, 1);
+		HAL_GPIO_WritePin(RGB_tl->BLUE_Port, RGB_tl->BLUE_Pin, 1);
+	}
+	else if(State == YELLOW_STATE){
+		HAL_GPIO_WritePin(RGB_tl->RED_Port, RGB_tl->RED_Pin, 1);
+		HAL_GPIO_WritePin(RGB_tl->YELLOW_Port, RGB_tl->YELLOW_Pin, 0);
+		HAL_GPIO_WritePin(RGB_tl->BLUE_Port, RGB_tl->BLUE_Pin, 1);
+	}
+	else {
+		HAL_GPIO_WritePin(RGB_tl->RED_Port, RGB_tl->RED_Pin, 1);
+		HAL_GPIO_WritePin(RGB_tl->YELLOW_Port, RGB_tl->YELLOW_Pin, 1);
+		HAL_GPIO_WritePin(RGB_tl->BLUE_Port, RGB_tl->BLUE_Pin, 0);
+	}
+}
+
+void RGB_TrafficLight_Blink(RGB_TrafficLight_t* RGB_tl, uint8_t State){
+	if(State == RED_STATE){
+		HAL_GPIO_TogglePin(RGB_tl->RED_Port, RGB_tl->RED_Pin);
+		HAL_GPIO_WritePin(RGB_tl->YELLOW_Port, RGB_tl->YELLOW_Pin, 1);
+		HAL_GPIO_WritePin(RGB_tl->BLUE_Port, RGB_tl->BLUE_Pin, 1);
+	}
+	else if(State == YELLOW_STATE){
+		HAL_GPIO_WritePin(RGB_tl->RED_Port, RGB_tl->RED_Pin, 1);
+		HAL_GPIO_TogglePin(RGB_tl->YELLOW_Port, RGB_tl->YELLOW_Pin);
+		HAL_GPIO_WritePin(RGB_tl->BLUE_Port, RGB_tl->BLUE_Pin, 1);
+	}
+	else {
+		HAL_GPIO_WritePin(RGB_tl->RED_Port, RGB_tl->RED_Pin, 1);
+		HAL_GPIO_WritePin(RGB_tl->YELLOW_Port, RGB_tl->YELLOW_Pin, 1);
+		HAL_GPIO_TogglePin(RGB_tl->BLUE_Port, RGB_tl->BLUE_Pin);
+	}
+}
+
+
+
+#endif /* INC_LIGHT_DISPLAY_H_ */
