@@ -1,0 +1,105 @@
+/*
+ * global.h
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_GLOBAL_H_
+#define INC_GLOBAL_H_
+
+/****************** SCHEDULER DEFINE *********************/
+#define SCH_MAX_TASKS 40
+#define NO_TASK_ID 0
+
+/****************** BUTTON DEFINE *********************/
+#define N0_OF_BUTTONS 3
+
+#define DURATION_FOR_AUTO_INCREASING 100
+#define DOUBLE_PRESS_CHECKIN 8
+#define DOUBLE_PRESS_TIMEOUT 15
+#define BUTTON_IS_PRESSED 0
+#define BUTTON_IS_RELEASED 1
+
+/****************** LIGHT DEFINE *********************/
+#define RED_STATE 0
+#define GREEN_STATE 1
+#define YELLOW_STATE 2
+
+/****************** LED DEFINE *****************/
+#define MAXLED 4
+
+#define LEDPORT GPIOB
+#define SEG0_PIN SEG0_Pin
+#define SEG1_PIN SEG1_Pin
+#define SEG2_PIN SEG2_Pin
+#define SEG3_PIN SEG3_Pin
+#define SEG4_PIN SEG4_Pin
+#define SEG5_PIN SEG5_Pin
+#define SEG6_PIN SEG6_Pin
+
+#define ENALEDPORT GPIOA
+#define EN0_PIN EN0_Pin
+#define EN1_PIN EN1_Pin
+#define EN2_PIN EN2_Pin
+#define EN3_PIN EN3_Pin
+
+/****************** SOFTWARE TIMER DEFINE *********************/
+#define MAX_TIMER 3
+
+/****************** STRUCTURE DEFINE **************************/
+typedef struct{
+	uint16_t btn_Pin;
+	GPIO_TypeDef * btn_Port;
+
+	GPIO_PinState btn_state;
+	GPIO_PinState debounceButton_1;
+	GPIO_PinState debounceButton_2;
+	GPIO_PinState debounceButton_3;
+
+	uint8_t flagForButtonPress1s;
+	uint8_t flagForButtonPressDouble;
+	uint8_t firtpressflag;
+	uint8_t flagpress;
+	uint16_t counterForButtonPress1s;
+	uint16_t counterForButtonPressDouble;
+} btn_typedef;
+
+typedef struct {
+	uint16_t RED_Pin;
+	uint16_t YELLOW_Pin;
+	uint16_t GREEN_Pin;
+
+	GPIO_TypeDef * RED_Port;
+	GPIO_TypeDef * YELLOW_Port;
+	GPIO_TypeDef * GREEN_Port;
+
+} RGB_TrafficLight_t;
+
+/****************** GLOBAL VARIABLES DEFINE *********************/
+extern uint8_t system_state;
+extern uint8_t light_state1;
+extern uint8_t light_state2;
+
+extern uint8_t Pre_Red_Counter;
+extern uint8_t Pre_Yellow_Counter;
+extern uint8_t Pre_Green_Counter;
+
+extern uint8_t Red_Counter;
+extern uint8_t Yellow_Counter;
+extern uint8_t Green_Counter;
+
+extern uint8_t Red_Counter_temp1;
+extern uint8_t Yellow_Counter_temp1;
+extern uint8_t Green_Counter_temp1;
+
+extern uint8_t Red_Counter_temp2;
+extern uint8_t Yellow_Counter_temp2;
+extern uint8_t Green_Counter_temp2;
+
+extern uint8_t num1;
+extern uint8_t num2;
+
+extern int index_led;
+
+#endif /* INC_GLOBAL_H_ */

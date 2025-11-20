@@ -1,0 +1,21 @@
+/*
+ * global.h
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_GLOBAL_H_
+#define INC_GLOBAL_H_
+
+/****************** SCHEDULER DEFINE *********************/
+#define SCH_MAX_TASKS 40
+#define NO_TASK_ID 0
+
+
+
+
+
+
+
+#endif /* INC_GLOBAL_H_ */

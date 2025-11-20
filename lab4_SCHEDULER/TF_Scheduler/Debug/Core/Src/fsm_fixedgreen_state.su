@@ -1,0 +1,2 @@
+fsm_fixedgreen_state.c:10:6:fsm_processing_green_trafficlight	16	static
+fsm_fixedgreen_state.c:17:6:fsm_fixedgreen_state	24	static

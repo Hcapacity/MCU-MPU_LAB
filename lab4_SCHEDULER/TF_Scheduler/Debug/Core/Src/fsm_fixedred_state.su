@@ -1,0 +1,2 @@
+fsm_fixedred_state.c:10:6:fsm_processing_red_trafficlight	16	static
+fsm_fixedred_state.c:18:6:fsm_fixedred_state	8	static

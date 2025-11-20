@@ -1,0 +1,45 @@
+/*
+ * scheduler.h
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+/* scheduler.h */
+
+#ifndef INC_SCHEDULER_H_
+#define INC_SCHEDULER_H_
+
+#include "global.h"
+#include "main.h"
+
+#define RETURN_NORMAL 1
+#define RETURN_ERROR 0
+
+typedef uint8_t tByte;
+
+typedef struct {
+    void    (*pTask)(void); // pointer to task (void)(void)
+    uint32_t Delay;         // ticks until next run
+    uint32_t Period;        // interval between runs
+    uint32_t TaskID;        // unique ID (for delete by ID)
+    uint8_t  RunMe;         // incremented when task is due
+} sTask;
+
+extern sTask SCH_tasks_G[SCH_MAX_TASKS];
+
+//void     SCH_Init(void);
+void     SCH_Update(void);
+unsigned char SCH_Add_Task(void (* pFunction) (), unsigned int DELAY, unsigned int PERIOD);
+void     SCH_Dispatch_Tasks(void);
+unsigned char SCH_Delete_Task(const tByte TASK_INDEX);
+void     SCH_Go_To_Sleep(void);
+//void     SCH_Report_Status(void);
+
+//void     MX_IWDG_Init(void);
+//void     Watchdog_Refresh(void);
+//unsigned char Is_Watchdog_Reset(void);
+//void     Watchdog_Counting(void);
+//void     Reset_Watchdog_Counting(void);
+
+#endif /* INC_SCHEDULER_H_ */

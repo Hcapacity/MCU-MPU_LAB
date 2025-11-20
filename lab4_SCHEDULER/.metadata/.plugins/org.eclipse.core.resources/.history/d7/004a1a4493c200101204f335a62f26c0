@@ -1,0 +1,12 @@
+   /*
+ * fsm_fixedblue_state.c
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+#include "global.h"
+
+void fsm_fixedgreen_state(btn_typedef* btn, RGB_TrafficLight_t* RGB_tl1, RGB_TrafficLight_t* RGB_tl2){
+
+}

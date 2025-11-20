@@ -1,0 +1,16 @@
+/*
+ * fsm_normal_state.h
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_FSM_NORMAL_STATE_H_
+#define INC_FSM_NORMAL_STATE_H_
+
+#include "global.h"
+
+void fsm_processing_trafficlight(RGB_TrafficLight_t* RGB_tl1, RGB_TrafficLight_t* RGB_tl2);
+void fsm_normal_state(btn_typedef* btn, RGB_TrafficLight_t* RGB_tl1, RGB_TrafficLight_t* RGB_tl2);
+
+#endif /* INC_FSM_NORMAL_STATE_H_ */

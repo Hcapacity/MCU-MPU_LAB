@@ -1,0 +1,16 @@
+/*
+ * fsm_normal_state.h
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_FSM_NORMAL_STATE_H_
+#define INC_FSM_NORMAL_STATE_H_
+
+#include "global.h"
+
+void fsm_processing_trafficlight();
+void fsm_normal_state();
+
+#endif /* INC_FSM_NORMAL_STATE_H_ */

@@ -1,0 +1,21 @@
+/*
+ * fsm_normal_state.h
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+/* fsm_normal_state.h */
+
+#ifndef INC_FSM_NORMAL_STATE_H_
+#define INC_FSM_NORMAL_STATE_H_
+
+#include "global.h"
+#include "led_display.h"
+#include "light_display.h"
+#include "button.h"
+
+void fsm_processing_trafficlight(void);
+void fsm_normal_state(void);
+
+#endif /* INC_FSM_NORMAL_STATE_H_ */

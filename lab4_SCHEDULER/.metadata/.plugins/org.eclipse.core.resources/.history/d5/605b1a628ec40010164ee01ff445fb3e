@@ -1,0 +1,183 @@
+#include "scheduler.h"
+
+static uint32_t num_task = 0;
+sTask SCH_tasks_G[SCH_MAX_TASKS];
+
+//void SCH_Init ( void ) {
+//	unsigned char i ;
+//	for ( i = 0; i < SCH_MAX_TASKS; i ++) {
+//
+//	}
+
+//	num_task = 0;
+//	Error_code_G = 0;
+//	Timer_init();
+//	Watchdog_init();
+//}
+
+void SCH_Update(void)
+{
+    if (SCH_tasks_G[0].pTask != 0)
+    {
+        if (SCH_tasks_G[0].Delay == 0)
+        {
+            SCH_tasks_G[0].RunMe += 1;
+        }
+        else
+        {
+            SCH_tasks_G[0].Delay -= 1;
+        }
+    }
+}
+
+unsigned char SCH_Add_Task(void (* pFunction) (), unsigned int DELAY, unsigned int PERIOD)
+{
+    unsigned char i = 0;
+    unsigned int accumulated = 0;
+    num_task++;
+
+    while (i < SCH_MAX_TASKS && SCH_tasks_G[i].pTask != 0 && accumulated + SCH_tasks_G[i].Delay <= DELAY)
+    {
+        accumulated += SCH_tasks_G[i].Delay;
+        i++;
+    }
+
+    if (i == SCH_MAX_TASKS)
+    {
+        return RETURN_ERROR;
+    }
+
+    for (unsigned char j = num_task - 1; j > i; j--)
+    {
+        SCH_tasks_G[j] = SCH_tasks_G[j - 1];
+    }
+
+    SCH_tasks_G[i].pTask = pFunction;
+    SCH_tasks_G[i].Period = PERIOD;
+    SCH_tasks_G[i].RunMe = 0;
+    SCH_tasks_G[i].Delay = DELAY - accumulated;
+
+    for(unsigned char j = i + 1; j < num_task; j++){
+    	SCH_tasks_G[j].Delay -= SCH_tasks_G[i].Delay;
+    }
+
+    return i;
+}
+
+
+void SCH_Dispatch_Tasks(void)
+{
+    while (SCH_tasks_G[0].RunMe > 0)
+    {
+        (*SCH_tasks_G[0].pTask)();
+        SCH_tasks_G[0].RunMe--;
+
+        sTask temp = SCH_tasks_G[0];
+
+        SCH_Delete_Task(0);
+
+        if (temp.Period != 0)
+        {
+            SCH_Add_Task(temp.pTask, temp.Period, temp.Period);
+        }
+
+        if (SCH_tasks_G[0].Delay == 0 && SCH_tasks_G[0].pTask != 0)
+        {
+            SCH_tasks_G[0].RunMe++;
+        }
+    }
+
+//    SCH_Report_Status();
+    SCH_Go_To_Sleep();
+}
+
+
+
+unsigned char SCH_Delete_Task(const tByte TASK_INDEX)
+{
+    if (SCH_tasks_G[TASK_INDEX].pTask == 0 || num_task == 0)
+    {
+//        Error_code_G = ERROR_SCH_CANNOT_DELETE_TASK;
+        return RETURN_ERROR;
+    }
+
+    unsigned char i = TASK_INDEX;
+
+    if (SCH_tasks_G[i].pTask != 0)
+    {
+        SCH_tasks_G[i + 1].Delay += SCH_tasks_G[i].Delay;
+    }
+
+    for (; i < num_task - 1; i++)
+    {
+        SCH_tasks_G[i].pTask = SCH_tasks_G[i + 1].pTask;
+        SCH_tasks_G[i].Delay = SCH_tasks_G[i + 1].Delay;
+        SCH_tasks_G[i].Period = SCH_tasks_G[i + 1].Period;
+        SCH_tasks_G[i].RunMe = SCH_tasks_G[i + 1].RunMe;
+    }
+
+    SCH_tasks_G[num_task - 1].pTask = 0;
+    SCH_tasks_G[num_task - 1].Delay = 0;
+    SCH_tasks_G[num_task - 1].Period = 0;
+    SCH_tasks_G[num_task - 1].RunMe = 0;
+
+    num_task--;
+
+    return RETURN_NORMAL;
+}
+
+
+void SCH_Go_To_Sleep () {
+//todo : Optional
+}
+
+//IWDG_HandleTypeDef hiwdg ;
+//static uint32_t counter_for_watchdog = 0;
+
+//void SCH_Report_Status ( void ) {
+//# ifdef SCH_REPORT_ERRORS
+//	if ( Error_code_G != Last_error_code_G ) {
+//		Error_port = 255 − Error_code_G ;
+//		Last_error_code_G = Error_code_G ;
+//		if ( Error_code_G != 0) {
+//		Error_tick_count_G = 60000;
+//		} else {
+//		Error_tick_count_G = 0;
+//		}
+//	} else {
+//		if ( Error_tick_count_G != 0) {
+//			if (−−Error_tick_count_G == 0) {
+//			Error_code_G = 0; // Reset error code
+//			}
+//		}
+//	}
+//#endif
+//}
+//
+//void MX_IWDG_Init( void ) {
+//	hiwdg.Instance = IWDG;
+//	hiwdg.Init.Prescaler = IWDG_PRESCALER_32;
+//	hiwdg.Init.Reload = 4095;
+//	if (HAL_IWDG_Init(&hiwdg) != HAL_OK) {
+//	Error_Handler () ;
+//	}
+//}
+//
+//void Watchdog_Refresh( void ) {
+//	HAL_IWDG_Refresh(&hiwdg) ;
+//}
+//
+//unsigned char Is_Watchdog_Reset ( void ) {
+//	if ( counter_for_watchdog > 3) {
+//		return 1;
+//	}
+//	return 0;
+//}
+//
+//void Watchdog_Counting( void ) {
+//	counter_for_watchdog++;
+//}
+//
+//void Reset_Watchdog_Counting( void ) {
+//	counter_for_watchdog = 0;
+//}

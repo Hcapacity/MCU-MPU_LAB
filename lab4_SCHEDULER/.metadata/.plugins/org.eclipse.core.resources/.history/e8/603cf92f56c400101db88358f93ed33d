@@ -1,0 +1,51 @@
+/*
+ * fsm_fixedred_state.c
+ *
+ *  Created on: Nov 16, 2025
+ *      Author: Admin
+ */
+
+#include "fsm_fixedred_state.h"
+
+void fsm_fixedred_state(){
+	if(system_state == FIX_RED_STATE){
+		if(is_button_pressed(&btn[0])){
+			if(Red_Counter != Pre_Red_Counter){
+				Pre_Red_Counter = Red_Counter;
+			}
+			index_led = 0;
+			system_state = FIX_YELLOW_STATE;
+			updateClockBuffer(system_state, Pre_Yellow_Counter);
+		}
+		else{
+			if(is_button_pressed_1s(&btn[1])){
+				Pre_Red_Counter++;
+				if(Pre_Red_Counter >= 100) Pre_Red_Counter = 1;
+				updateClockBuffer(system_state, Pre_Red_Counter);
+				index_led = 0;
+			}
+			else{
+				if(is_button_pressed(&btn[1])){
+					Pre_Red_Counter++;
+					if(Pre_Red_Counter >= 100) Pre_Red_Counter = 1;
+					updateClockBuffer(system_state, Pre_Red_Counter);
+					index_led = 0;
+				}
+			}
+
+			if(is_button_pressed(&btn[2])){
+				Red_Counter = Pre_Red_Counter;
+			}
+
+			//Scan LED
+//			if(timer_flag[1] == 1){
+//				settimer_index(1, 250);
+//				if(index_led >= 4) index_led = 0;
+//				update7SEG(index_led++);
+//
+//				RGB_TrafficLight_Blink(RGB_tl1, 0);
+//				RGB_TrafficLight_Blink(RGB_tl2, 0);
+//			}
+		}
+	}
+}

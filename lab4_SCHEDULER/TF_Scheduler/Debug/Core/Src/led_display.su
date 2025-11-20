@@ -1,0 +1,4 @@
+led_display.c:14:6:updateClockBuffer	16	static
+led_display.c:21:6:display7SEG	16	static
+led_display.c:51:6:update7SEG	16	static
+led_display.c:86:6:Scan_Led	8	static
