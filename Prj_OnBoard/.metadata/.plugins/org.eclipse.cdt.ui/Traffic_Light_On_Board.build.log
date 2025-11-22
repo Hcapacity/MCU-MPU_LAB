@@ -1,0 +1,106 @@
+12:58:10 **** Build of configuration Debug for project Traffic_Light_On_Board ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/button.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/button.d" -MT"Core/Src/button.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/button.o"
+arm-none-eabi-gcc "../Core/Src/fsm_config_state.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/fsm_config_state.d" -MT"Core/Src/fsm_config_state.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fsm_config_state.o"
+arm-none-eabi-gcc "../Core/Src/fsm_normal_state.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/fsm_normal_state.d" -MT"Core/Src/fsm_normal_state.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/fsm_normal_state.o"
+arm-none-eabi-gcc "../Core/Src/global.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103xB -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/global.d" -MT"Core/Src/global.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/global.o"
+../Core/Src/global.c:14:1: error: expected expression before 'uint8_t'
+   14 | uint8_t light_state1  = RED_STATE;
+      | ^~~~~~~
+In file included from ../Core/Src/fsm_normal_state.c:9:
+../Core/Inc/fsm_normal_state.h:12:10: fatal error: led_display.h: No such file or directory
+   12 | #include "led_display.h"
+      |          ^~~~~~~~~~~~~~~
+compilation terminated.
+../Core/Src/button.c: In function 'button_reading':
+../Core/Src/button.c:35:16: error: 'btn_typedef' {aka 'struct <anonymous>'} has no member named 'counterForButtonPress'; did you mean 'counterForButtonPress1s'?
+   35 |      if(btn[i].counterForButtonPress >= 2 && btn[i].counterForButtonPress <= 8){
+      |                ^~~~~~~~~~~~~~~~~~~~~
+      |                counterForButtonPress1s
+../Core/Src/button.c:35:53: error: 'btn_typedef' {aka 'struct <anonymous>'} has no member named 'counterForButtonPress'; did you mean 'counterForButtonPress1s'?
+   35 |      if(btn[i].counterForButtonPress >= 2 && btn[i].counterForButtonPress <= 8){
+      |                                                     ^~~~~~~~~~~~~~~~~~~~~
+      |                                                     counterForButtonPress1s
+../Core/Src/button.c:37:14: error: 'btn_typedef' {aka 'struct <anonymous>'} has no member named 'counterForButtonPress'; did you mean 'counterForButtonPress1s'?
+   37 |       btn[i].counterForButtonPress = 0;
+      |              ^~~~~~~~~~~~~~~~~~~~~
+      |              counterForButtonPress1s
+../Core/Src/button.c:39:18: error: 'btn_typedef' {aka 'struct <anonymous>'} has no member named 'counterForButtonPress'; did you mean 'counterForButtonPress1s'?
+   39 |      else btn[i].counterForButtonPress = 0;
+      |                  ^~~~~~~~~~~~~~~~~~~~~
+      |                  counterForButtonPress1s
+../Core/Src/button.c:44:12: error: 'btn_typedef' {aka 'struct <anonymous>'} has no member named 'counterForButtonPress'; did you mean 'counterForButtonPress1s'?
+   44 |     btn[i].counterForButtonPress++;
+      |            ^~~~~~~~~~~~~~~~~~~~~
+      |            counterForButtonPress1s
+make: *** [Core/Src/subdir.mk:58: Core/Src/global.o] Error 1
+make: *** Waiting for unfinished jobs....
+make: *** [Core/Src/subdir.mk:58: Core/Src/fsm_normal_state.o] Error 1
+make: *** [Core/Src/subdir.mk:58: Core/Src/button.o] Error 1
+../Core/Src/fsm_config_state.c: In function 'blink_red_trafficlight':
+../Core/Src/fsm_config_state.c:18:3: warning: implicit declaration of function 'RGB_TrafficLight_Blink' [-Wimplicit-function-declaration]
+   18 |   RGB_TrafficLight_Blink(RGB_tl1, 0);
+      |   ^~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/fsm_config_state.c: In function 'fsm_fixedred_state':
+../Core/Src/fsm_config_state.c:28:5: error: 'error_state' undeclared (first use in this function)
+   28 |     error_state = RED_NOT_EQUAL_YELLOW_AND_GREEN;
+      |     ^~~~~~~~~~~
+../Core/Src/fsm_config_state.c:28:5: note: each undeclared identifier is reported only once for each function it appears in
+../Core/Src/fsm_config_state.c:28:19: error: 'RED_NOT_EQUAL_YELLOW_AND_GREEN' undeclared (first use in this function)
+   28 |     error_state = RED_NOT_EQUAL_YELLOW_AND_GREEN;
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/fsm_config_state.c:40:5: warning: implicit declaration of function 'updateLCDBuffer' [-Wimplicit-function-declaration]
+   40 |     updateLCDBuffer(Red_Counter, Green_Counter);
+      |     ^~~~~~~~~~~~~~~
+../Core/Src/fsm_config_state.c:41:20: error: 'NORMAL_STATE' undeclared (first use in this function); did you mean 'MANUAL_STATE'?
+   41 |     system_state = NORMAL_STATE;
+      |                    ^~~~~~~~~~~~
+      |                    MANUAL_STATE
+../Core/Src/fsm_config_state.c:71:7: warning: implicit declaration of function 'is_button_pressed1s'; did you mean 'is_button_pressed_1s'? [-Wimplicit-function-declaration]
+   71 |    if(is_button_pressed1s(&btn[2])){
+      |       ^~~~~~~~~~~~~~~~~~~
+      |       is_button_pressed_1s
+../Core/Src/fsm_config_state.c: In function 'fsm_fixedyellow_state':
+../Core/Src/fsm_config_state.c:98:22: error: 'Blue_Counter' undeclared (first use in this function); did you mean 'Green_Counter'?
+   98 |    if(Red_Counter != Blue_Counter + Green_Counter){
+      |                      ^~~~~~~~~~~~
+      |                      Green_Counter
+../Core/Src/fsm_config_state.c:99:5: error: 'error_state' undeclared (first use in this function)
+   99 |     error_state = RED_NOT_EQUAL_YELLOW_GREEN;
+      |     ^~~~~~~~~~~
+../Core/Src/fsm_config_state.c:99:19: error: 'RED_NOT_EQUAL_YELLOW_GREEN' undeclared (first use in this function)
+   99 |     error_state = RED_NOT_EQUAL_YELLOW_GREEN;
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/fsm_config_state.c:111:5: warning: implicit declaration of function 'RGB_TrafficLight_TurnOn' [-Wimplicit-function-declaration]
+  111 |     RGB_TrafficLight_TurnOn(RGB_tl1, RED_STATE);
+      |     ^~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/fsm_config_state.c:120:20: error: 'NORMAL_STATE' undeclared (first use in this function); did you mean 'MANUAL_STATE'?
+  120 |     system_state = NORMAL_STATE;
+      |                    ^~~~~~~~~~~~
+      |                    MANUAL_STATE
+../Core/Src/fsm_config_state.c:131:8: warning: implicit declaration of function 'is_button_double_pressed'; did you mean 'is_button_double_press'? [-Wimplicit-function-declaration]
+  131 |     if(is_button_double_pressed(&btn[1])){
+      |        ^~~~~~~~~~~~~~~~~~~~~~~~
+      |        is_button_double_press
+../Core/Src/fsm_config_state.c:149:20: error: 'RED_LESS_OR_EQUAL_THAN_YELLOW' undeclared (first use in this function)
+  149 |      error_state = RED_LESS_OR_EQUAL_THAN_YELLOW;
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/fsm_config_state.c: In function 'fsm_fixedgreen_state':
+../Core/Src/fsm_config_state.c:182:5: error: 'error_state' undeclared (first use in this function)
+  182 |     error_state = RED_NOT_EQUAL_YELLOW_GREEN;
+      |     ^~~~~~~~~~~
+../Core/Src/fsm_config_state.c:182:19: error: 'RED_NOT_EQUAL_YELLOW_GREEN' undeclared (first use in this function)
+  182 |     error_state = RED_NOT_EQUAL_YELLOW_GREEN;
+      |                   ^~~~~~~~~~~~~~~~~~~~~~~~~~
+../Core/Src/fsm_config_state.c:201:20: error: 'NORMAL_STATE' undeclared (first use in this function); did you mean 'MANUAL_STATE'?
+  201 |     system_state = NORMAL_STATE;
+      |                    ^~~~~~~~~~~~
+      |                    MANUAL_STATE
+../Core/Src/fsm_config_state.c:230:20: error: 'RED_LESS_OR_EQUAL_THAN_GREEN' undeclared (first use in this function)
+  230 |      error_state = RED_LESS_OR_EQUAL_THAN_GREEN;
+      |                    ^~~~~~~~~~~~~~~~~~~~~~~~~~~~
+make: *** [Core/Src/subdir.mk:58: Core/Src/fsm_config_state.o] Error 1
+"make -j16 all" terminated with exit code 2. Build might be incomplete.
+
+12:58:11 Build Failed. 24 errors, 5 warnings. (took 1s.193ms)
+

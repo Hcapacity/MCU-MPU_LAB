@@ -1,0 +1,13 @@
+/*
+ * light.h
+ *
+ *  Created on: Nov 21, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_LIGHT_DISPLAY_H_
+#define INC_LIGHT_DISPLAY_H_
+
+
+
+#endif /* INC_LIGHT_DISPLAY_H_ */
