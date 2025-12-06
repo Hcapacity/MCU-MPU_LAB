@@ -1,0 +1,123 @@
+!SESSION 2025-12-02 02:36:11.842 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-02 02:36:32.978
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-02 02:36:33.044
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-02 02:36:36.334
+!MESSAGE Started RMI Server, listening on port 41337
+
+!ENTRY org.eclipse.cdt.core 1 0 2025-12-02 02:44:44.608
+!MESSAGE Indexed 'Uart_Protocol' (19 sources, 78 headers) in 2.46 sec: 3,647 declarations; 13,136 references; 0 unresolved inclusions; 1 syntax errors; 2 unresolved names (0.012%)
+!SESSION 2025-12-02 14:15:24.568 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-02 14:15:44.269
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-02 14:15:44.337
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-02 14:15:52.289
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-12-02 15:06:38.090 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-02 15:06:42.116
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-02 15:06:42.135
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-02 15:06:45.708
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-12-02 15:29:26.465 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-02 15:29:39.243
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-02 15:29:39.307
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-02 15:29:46.027
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-12-02 15:46:50.063 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-02 15:47:01.749
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-02 15:47:01.797
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-02 15:47:06.865
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-12-03 13:58:22.050 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-03 14:09:32.016
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-03 14:09:32.080
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-03 14:09:38.640
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-12-04 01:16:48.534 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-04 01:17:08.588
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-04 01:17:08.667
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-04 01:17:15.194
+!MESSAGE Started RMI Server, listening on port 41337
+!SESSION 2025-12-04 10:52:59.373 -----------------------------------------------
+eclipse.buildId=Version 1.7.0
+java.version=11.0.10
+java.vendor=AdoptOpenJDK
+BootLoader constants: OS=win32, ARCH=x86_64, WS=win32, NL=en_US
+Command-line arguments:  -os win32 -ws win32 -arch x86_64
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 4 4 2025-12-04 10:53:15.004
+!MESSAGE CubeMX plugin appears to be active, Log4j initialization might be too late.
+
+!ENTRY com.st.stm32cube.ide.mcu.informationcenter 1 1 2025-12-04 10:53:15.128
+!MESSAGE Log4j initialized with config file D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\.metadata\.log4j.xml
+
+!ENTRY com.st.stm32cube.ide.mcu.ide 1 1 2025-12-04 10:53:22.809
+!MESSAGE Started RMI Server, listening on port 41337

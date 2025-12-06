@@ -1,0 +1,23 @@
+11:17:13 **** Incremental Build of configuration Debug for project Uart_Protocol ****
+make -j16 all 
+arm-none-eabi-gcc "../Core/Src/check_rc.c" -mcpu=cortex-m3 -std=gnu11 -g3 -DDEBUG -DUSE_HAL_DRIVER -DSTM32F103x6 -c -I../Core/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc -I../Drivers/STM32F1xx_HAL_Driver/Inc/Legacy -I../Drivers/CMSIS/Device/ST/STM32F1xx/Include -I../Drivers/CMSIS/Include -O0 -ffunction-sections -fdata-sections -Wall -fstack-usage -MMD -MP -MF"Core/Src/check_rc.d" -MT"Core/Src/check_rc.o" --specs=nano.specs -mfloat-abi=soft -mthumb -o "Core/Src/check_rc.o"
+arm-none-eabi-gcc -o "Uart_Protocol.elf" @"objects.list"   -mcpu=cortex-m3 -T"D:\CACMONDAICUONG\HK251\VXL_VDK\LAB\lab5_UART\Uart_Protocol\STM32F103C6TX_FLASH.ld" --specs=nosys.specs -Wl,-Map="Uart_Protocol.map" -Wl,--gc-sections -static --specs=nano.specs -mfloat-abi=soft -mthumb -Wl,--start-group -lc -lm -Wl,--end-group
+Finished building target: Uart_Protocol.elf
+ 
+arm-none-eabi-size   Uart_Protocol.elf 
+arm-none-eabi-objdump -h -S  Uart_Protocol.elf  > "Uart_Protocol.list"
+arm-none-eabi-objcopy  -O ihex  Uart_Protocol.elf  "Uart_Protocol.hex"
+arm-none-eabi-objcopy  -O binary  Uart_Protocol.elf  "Uart_Protocol.bin"
+   text	   data	    bss	    dec	    hex	filename
+  16784	    120	   1976	  18880	   49c0	Uart_Protocol.elf
+Finished building: default.size.stdout
+ 
+Finished building: Uart_Protocol.hex
+Finished building: Uart_Protocol.bin
+ 
+ 
+Finished building: Uart_Protocol.list
+ 
+
+11:17:14 Build Finished. 0 errors, 0 warnings. (took 618ms)
+

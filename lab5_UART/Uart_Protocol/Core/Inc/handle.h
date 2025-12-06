@@ -1,0 +1,20 @@
+/*
+ * handle.h
+ *
+ *  Created on: Dec 2, 2025
+ *      Author: Admin
+ */
+
+#ifndef INC_HANDLE_H_
+#define INC_HANDLE_H_
+
+#include "check_rc.h"
+
+#define IDLE 0
+#define SEND 1
+#define ACK 2
+#define RESEND 3
+
+void uart_communication_fsm();
+
+#endif /* INC_HANDLE_H_ */

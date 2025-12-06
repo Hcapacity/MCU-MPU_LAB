@@ -1,0 +1,5 @@
+check_rc.c:20:6:HAL_UART_RxCpltCallback	16	static
+check_rc.c:43:6:uart_init	8	static
+check_rc.c:61:9:find_char	32	static
+check_rc.c:76:7:substring	32	static
+check_rc.c:94:6:check_str_fsm	8	static
