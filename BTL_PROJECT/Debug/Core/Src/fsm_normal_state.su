@@ -1,0 +1,2 @@
+fsm_normal_state.c:12:6:fsm_processing_trafficlight	8	static
+fsm_normal_state.c:95:6:fsm_normal_state	8	static

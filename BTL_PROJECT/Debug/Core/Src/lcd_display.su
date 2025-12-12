@@ -1,0 +1,12 @@
+lcd_display.c:10:6:lcd_send_cmd	32	static
+lcd_display.c:23:6:lcd_send_data	32	static
+lcd_display.c:36:6:lcd_init	8	static
+lcd_display.c:53:6:lcd_send_string	16	static
+lcd_display.c:58:6:lcd_clear_display	8	static
+lcd_display.c:63:6:lcd_goto_XY	24	static
+lcd_display.c:81:6:lcd_send_number	16	static
+lcd_display.c:90:6:updateLCDBuffer_Auto	8	static
+lcd_display.c:137:6:updateLCDBuffer_Manual	8	static
+lcd_display.c:168:6:updateLCDBuffer_Config	8	static
+lcd_display.c:206:6:updateLCDBuffer_Error	8	static
+lcd_display.c:226:6:updateLCDBuffer	8	static

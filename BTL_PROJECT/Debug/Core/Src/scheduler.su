@@ -1,0 +1,8 @@
+scheduler.c:12:6:SCH_Init	4	static
+scheduler.c:17:17:GenerateNewTaskID	4	static
+scheduler.c:22:18:CreateNewTask	32	static
+scheduler.c:38:6:SCH_Update	4	static
+scheduler.c:47:6:HAL_TIM_PeriodElapsedCallback	16	static
+scheduler.c:51:10:SCH_Add_Task	56	static
+scheduler.c:114:6:SCH_Dispatch_Tasks	24	static
+scheduler.c:145:9:SCH_Delete_Task	24	static

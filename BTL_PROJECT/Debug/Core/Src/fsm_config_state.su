@@ -1,0 +1,6 @@
+fsm_config_state.c:16:6:blink_red_trafficlight	8	static
+fsm_config_state.c:24:6:fsm_fixedred_state	8	static
+fsm_config_state.c:79:6:blink_yellow_trafficlight	8	static
+fsm_config_state.c:86:6:fsm_fixedyellow_state	8	static
+fsm_config_state.c:151:6:blink_green_trafficlight	8	static
+fsm_config_state.c:158:6:fsm_fixedgreen_state	8	static

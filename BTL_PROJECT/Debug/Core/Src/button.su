@@ -1,0 +1,7 @@
+button.c:55:5:is_button_pressed	16	static
+button.c:64:5:is_button_pressed_1s	16	static
+button.c:73:5:is_button_double_pressed	16	static
+button.c:82:5:is_button_auto_increase	16	static
+button.c:92:5:is_button_held	16	static
+button.c:99:6:subKeyProcess	16	static
+button.c:122:6:getKeyInput	16	static
